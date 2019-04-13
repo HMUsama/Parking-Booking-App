@@ -1,0 +1,14 @@
+.App {
+  background: #282c34;
+  height:100%;
+  margin-top: 100;
+  /* background-image: url(./Assets/whole.jpg); */
+  /* background-repeat: no-repeat; */
+  /* background-size: auto; */
+}
+
+.image-car {
+  margin-left: 50;
+  width: 10;
+  background-color: transparent;
+}
