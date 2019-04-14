@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {signInUR} from '../../store/actions/authActionUR'
-import {Link} from 'react-router-dom'
-// import { Redirect } from 'react-router-dom'
+import {adminLognin} from '../../store/actions/authActionAd'
+import { Redirect } from 'react-router-dom'
 
-class AdminLogin extends Component {
+class AdminLognin extends Component {
     // constructor(){
         state = {
             email:'',
@@ -19,21 +18,17 @@ hundleChange=(e)=>{
 }
 hundleSubmit=(e)=>{
     e.preventDefault();
-    console.log("User Login",e)
-    // this.props.signInUR(this.state);
+    this.props.adminLognin(this.state)
 }
 
   render() {
-    // const {authError,authStd,student} = this.props;
-    // const check = [...authStd.uid,student ]
-    // console.log("StudentLog***")
-    // if(authStd.uid ) return <Redirect to='/dashboardStd'/>
- 
-    
+    const{authError,authAd} = this.props;
+    console.log("___",authAd.uid)
+    if(authAd.uid) return <Redirect to='/adminDashboard'/>
     return (
         <div className="container">
             <form onSubmit={this.hundleSubmit} className="gray">
-            <h5 className="white-text text-darken-6 center"> Student SignIn</h5>
+            <h5 className="white-text text-darken-6 center"> Admin Login</h5>
             <div className="input-field">
             <label htmlFor="email">Email</label>
             <input type="email" id="email" onChange={this.hundleChange} />
@@ -46,11 +41,9 @@ hundleSubmit=(e)=>{
         <br/>
             <div className="input-field">
             <button className="btn pink lighten-1 z-depth-2">Login</button>
-                {/* <div className="red-text center">
-                    {authError ? <h5>
-                    {authError}
-                    </h5> : null}
-                </div> */}
+                <div className="red-text center">
+                    {authError ? <p>{authError}</p> : null}
+                </div>
             </div>
             </form>
         </div>
@@ -58,20 +51,18 @@ hundleSubmit=(e)=>{
   }
 }
 
+const mapStateToProps =(state)=> {
+    // console.log("============",state)
+    return{
+        authAd: state.firebase.auth,
+        authError: state.authAd.authError
+    }
+}
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        adminLognin: (Admin) => dispatch(adminLognin(Admin))
+    }
+}
 
-// const mapStateToProps = (state) => {
-//     const student= student ? true :false
-//     return{
-//         authStd:   state.firebase.auth,
-//         authError: state.authStd.authErrorStd_login,
-//         student  : state.authStd.student,
-//     }
-// }
-// const mapDispatchToProps=(dispatch)=>{
-//     return{
-//         signInUR: (creds) =>dispatch(signInUR(creds))
-//     }
-// }
 
-// export default connect(mapStateToProps,mapDispatchToProps)(AdminLogin);
-export default AdminLogin;
+export default connect(mapStateToProps,mapDispatchToProps)(AdminLognin);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import './Dashboard.css';
 
 
-class DashboardUR extends Component {
+class DashboardAD extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,11 +13,12 @@ class DashboardUR extends Component {
   render() {
     return (
       <div>
-        <h1>User Dashboard</h1>
-        <h1>User Dashboard</h1>
+        <h1>Admin Dashboard</h1>
+        <h1>Admin Dashboard</h1>
+        <h1>Admin Dashboard</h1>
       </div>
     );
   }
 }
 
-export default DashboardUR;
+export default DashboardAD;

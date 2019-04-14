@@ -64,18 +64,18 @@ hundleSubmit=(e)=>{
     );
   }
 }
-// const mapStateToProps =(state)=> {
-//     return{
-//         authStd: state.firebase.auth,
-//         authError: state.authStd.authErrorStd_signup,
-//         student  : state.authStd.student
-//     }
-// }
-// const mapDispatchToProps =(dispatch)=> {
-//     return {
-//         userSignUp: (newStudent) => dispatch(userSignUp(newStudent))
-//     }
-// }
+const mapStateToProps =(state)=> {
+    return{
+        authStd: state.firebase.auth,
+        // authError: state.authStd.authErrorStd_signup,
+        // student  : state.authStd.student
+    }
+}
+const mapDispatchToProps =(dispatch)=> {
+    return {
+        userSignUp: (newStudent) => dispatch(userSignUp(newStudent))
+    }
+}
 
-// export default connect(mapStateToProps,mapDispatchToProps)(UserSignUp);
-export default UserSignUp;
+export default connect(mapStateToProps,mapDispatchToProps)(UserSignUp);
+// export default UserSignUp;

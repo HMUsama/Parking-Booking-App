@@ -4,13 +4,15 @@ import {connect} from 'react-redux'
 import {signOutStd} from '../../../store/actions/authActionUR' 
 
 
+
 const UsersSignedInLinks = (props) => {
     // console.log("StdSignedInLinks",props)
     return(
      <ul className="right">
         <li><NavLink to='/parking'>Book Parking </NavLink></li>
         <li><NavLink to='/selectArea'>Details </NavLink></li>
-        <li><NavLink to='/'><a onClick={props.signOutStd}>LogOut </a></NavLink></li>
+        {/* <li><NavLink to='/'><a onClick={props.signOutStd}>LogOut </a></NavLink></li> */}
+        <li><NavLink to='/'><a onClick={this.signOutStd}>LogOut </a></NavLink></li>
      </ul>
     )
 }

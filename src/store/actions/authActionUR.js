@@ -9,12 +9,10 @@ export const userSignUp = (newStudent) =>{
         return firestore.collection("student").doc(res.user.uid).set({
                 email    : newStudent.email,
                 firstName: newStudent.firstName,
-                lastName:  newStudent.lastName,
-                designation: 'student',
-                initails:  newStudent.firstName[0] + newStudent.lastName[0]
+                lastName:  newStudent.lastName,     
             })
         }).then(() => {
-            dispatch({ type:'SIGNUP_SUCCESS' })
+            dispatch({ type:'SIGNUP_SUCCESS',payload:'User' })
         }).catch((err) => {
             dispatch({ type:'SIGNUP_ERROR',err });
         });
@@ -29,7 +27,7 @@ export const signInUR = (credentails) =>{
             credentails.email,
             credentails.password
         ).then(()=>{
-            dispatch({type:'Login_SuccessFull'});
+            dispatch({type:'Login_SuccessFull',payload:'User'});
         }).catch((err)=>{
             dispatch({type:'Login_Error',err});
         });

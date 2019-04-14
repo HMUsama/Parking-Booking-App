@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {signInUR} from '../../store/actions/authActionUR'
 import {Link} from 'react-router-dom'
-// import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class UsersLogIn extends Component {
     // constructor(){
@@ -20,14 +20,14 @@ hundleChange=(e)=>{
 hundleSubmit=(e)=>{
     e.preventDefault();
     console.log("User Login",e)
-    // this.props.signInUR(this.state);
+    this.props.signInUR(this.state);
 }
 
   render() {
-    // const {authError,authStd,student} = this.props;
+    const {authError,authStd,student} = this.props;
     // const check = [...authStd.uid,student ]
-    // console.log("StudentLog***")
-    // if(authStd.uid ) return <Redirect to='/dashboardStd'/>
+    console.log("StudentLog***")
+    if(authStd.uid ) return <Redirect to='/dashboardUR'/>
  
     
     return (
@@ -48,11 +48,11 @@ hundleSubmit=(e)=>{
             <button className="btn pink lighten-1 z-depth-2">Login</button>
             <Link to='/userSignUp' className=" lighten-1 ">
             Create a new Account</Link>
-                {/* <div className="red-text center">
+                <div className="red-text center">
                     {authError ? <h5>
                     {authError}
                     </h5> : null}
-                </div> */}
+                </div>
             </div>
             </form>
         </div>
@@ -61,19 +61,19 @@ hundleSubmit=(e)=>{
 }
 
 
-// const mapStateToProps = (state) => {
-//     const student= student ? true :false
-//     return{
-//         authStd:   state.firebase.auth,
-//         authError: state.authStd.authErrorStd_login,
-//         student  : state.authStd.student,
-//     }
-// }
-// const mapDispatchToProps=(dispatch)=>{
-//     return{
-//         signInUR: (creds) =>dispatch(signInUR(creds))
-//     }
-// }
+const mapStateToProps = (state) => {
+    const student= student ? true :false
+    return{
+        authStd:   state.firebase.auth,
+        // authError: state.authStd.authErrorStd_login,
+        // student  : state.authStd.student,
+    }
+}
+const mapDispatchToProps=(dispatch)=>{
+    return{
+        signInUR: (creds) =>dispatch(signInUR(creds))
+    }
+}
 
-// export default connect(mapStateToProps,mapDispatchToProps)(UsersLogIn);
-export default UsersLogIn;
+export default connect(mapStateToProps,mapDispatchToProps)(UsersLogIn);
+// export default UsersLogIn;

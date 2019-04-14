@@ -12,15 +12,14 @@ const authReducesUser =( state = initState,action )=>{
         case "Login_SuccessFull":
         console.log("Login_SuccesFull**authReduces**")
         return{
-            student:'student',
             ...state,
             authErrorStd_signup:null,
+            status:action.payload,
         }
 
         case "LogOut_SuccessFull":
         console.log("LogOut_SuccesFull**authReduces**")
         return {
-            student:false,
             state,
         }
 
@@ -29,9 +28,9 @@ const authReducesUser =( state = initState,action )=>{
         case 'SIGNUP_SUCCESS' :
             console.log('signup_successfull**authReduces**');
         return{
-            student:'student',
             ...state,
             authErrorStd_signup:null,
+            status:action.payload,
         }
         case 'SIGNUP_ERROR' :
             console.log('signup_Error**authReduces**');
