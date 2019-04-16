@@ -14,7 +14,7 @@ const authReducesAd =( state = initState,action )=>{
     return{
         ...state,
         authError:null,
-        status:action.payload,
+        status:action.payload,  
     }
     
     case "LogOut_SuccessFull":

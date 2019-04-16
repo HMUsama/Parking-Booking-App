@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {signInUR} from '../../store/actions/authActionUR'
+import {adminLognin} from '../../store/actions/authActionAd'
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
+// import Loader from '../loader/Loader'
+
 
 class UsersLogIn extends Component {
     // constructor(){
         state = {
             email:'',
-            password:''
+            password:'',
+            status:this.props._status,
         }    
     // }
 
@@ -20,14 +24,23 @@ hundleChange=(e)=>{
 hundleSubmit=(e)=>{
     e.preventDefault();
     console.log("User Login",e)
-    this.props.signInUR(this.state);
+    if(this.state.email==='admin@g.com' && this.state.password === '123123'){
+        this.props.adminLognin(this.state);
+    }else{
+        this.props.signInUR(this.state);
+    }
 }
 
   render() {
-    const {authError,authStd,student} = this.props;
-    // const check = [...authStd.uid,student ]
-    console.log("StudentLog***")
-    if(authStd.uid ) return <Redirect to='/dashboardUR'/>
+    const {authError,auth,student,statusAD,statusUR} = this.props;
+    console.log("ADMIN LOGIN STATUS",statusAD)
+    console.log("USER LOGIN STATUS",statusUR)
+    console.log("ID",auth)
+    // let id =auth.uid;
+    localStorage.setItem("ADMIN",statusAD)
+    localStorage.setItem("USER",statusUR)
+    if(auth ) return <Redirect to='/home'/>
+    // if(!authStd.uid ) return <Loader/>
  
     
     return (
@@ -62,16 +75,20 @@ hundleSubmit=(e)=>{
 
 
 const mapStateToProps = (state) => {
-    const student= student ? true :false
+    console.log("User Login______________________>>>>>",state)
+    // console.log("User Login__________STATUS____________>>>>>",state.authUR.status)
+    const status1 =state.authAd.status;
+    const status2 =state.authUR.status;
     return{
-        authStd:   state.firebase.auth,
-        // authError: state.authStd.authErrorStd_login,
-        // student  : state.authStd.student,
+        auth:   state.firebase.auth.uid,
+        statusAD:status1,
+        statusUR:status2,
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return{
-        signInUR: (creds) =>dispatch(signInUR(creds))
+        signInUR: (creds) =>dispatch(signInUR(creds)),
+        adminLognin: (creds) =>dispatch(adminLognin(creds))
     }
 }
 

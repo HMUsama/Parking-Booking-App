@@ -26,8 +26,11 @@
 .select_Area{
     /* width: 500px; */
     border: 1px solid black;
-    background-color: rgb(202, 214, 213);
+    background-color: rgb(137, 226, 219);
     /* padding: 80px; */
     height: 500px;
     margin: 20px;
+    
+}
+.date-picker{
 }

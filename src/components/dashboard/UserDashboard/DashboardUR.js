@@ -13,8 +13,10 @@ class DashboardUR extends Component {
   render() {
     return (
       <div>
-        <h1>User Dashboard</h1>
-        <h1>User Dashboard</h1>
+        <center>
+      <img src="https://www.mudelautod.ee/wp-content/uploads/loader.gif"   className="image-car"/>
+        </center>
+        {/* <h1>User Dashboard</h1> */}
       </div>
     );
   }

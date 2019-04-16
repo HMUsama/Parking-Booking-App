@@ -8,15 +8,14 @@
     height: 100px;
 }
 .block_Area{
-    display: flex;
+    /* display: flex; */
 }
 .block_1{
     flex-direction: column;
-    margin-left: 100px;
     border: 1px solid #555555;
     background-color: #555858;
     color: aliceblue;
-    width: 100px;
+    width: 50px;
     cursor: pointer;
 }
 .block_1:hover{
@@ -31,10 +30,6 @@
     height: 500px;
     margin: 20px;
 }
-/* .slot_btn{
-    width:100px;
-
-} */
 
 .slot_btn {
     width: 140px;
@@ -55,12 +50,25 @@
   
   .slot_btn:hover {
     background-color: #009688;
-        box-shadow: 0px 15px 20px rgba(47, 87, 35, 0.73);
+    box-shadow: 0px 15px 20px rgba(47, 87, 35, 0.73);
     color: #fff;
     transform: translateY(-7px);
   }
-  .DatePicker{
-      display: flex;
-      width:150px;
-      /* margin-left: 5px; */
+  .SelectSlot{
+    background-image: url('../../../Assets/road.jpg');
+    /* background-repeat: no-repeat; */
+    height:150px;
+    /* width:50%; */
   }
+.table1{
+    display: flex;
+    flex-direction: row; 
+    /* margin-left: 400px; */
+}
+.table1-row{
+    /* margin-left:100px; */
+    /* margin-right:500px; */
+}
+.row1{
+    margin-right:10px;
+}

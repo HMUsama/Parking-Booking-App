@@ -4,6 +4,7 @@ export const adminLognin = (credentails) =>{
         firebase.auth().signInWithEmailAndPassword(
             credentails.email,
             credentails.password
+
         ).then(()=>{
             dispatch({type:'Login_SuccessFull_Admin',payload:'Admin'});
         }).catch((err)=>{

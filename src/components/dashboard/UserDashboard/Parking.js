@@ -14,7 +14,7 @@ class Parking extends Component {
                 <div className="block_Area">
                     <p ><NavLink to='/block_Area1'className="block_1">Block 1</NavLink></p>
                     <p ><NavLink to='/block_Area2'className="block_1">Block 2</NavLink></p>
-                    <p ><NavLink to='/usersLogIn'className="block_1">Block 3</NavLink></p>
+                    <p ><NavLink to='/block_Area3'className="block_1">Block 3</NavLink></p>
                 </div>
             </center>
         </div>

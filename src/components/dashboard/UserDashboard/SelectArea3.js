@@ -9,7 +9,7 @@ import './SelectAreas.css'
 
 
 
-class SelectArea2 extends Component {
+class SelectArea3 extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -111,4 +111,4 @@ SelectSlot(){
   }
 }
 
-export default SelectArea2;
+export default SelectArea3;
