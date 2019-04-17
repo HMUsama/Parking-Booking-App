@@ -11,7 +11,7 @@ $dotSize: 6px;
 
 body {
   text-align: center;
-  line-height: 100vh;
+  // line-height: 100vh;
 }
 
 .container {
@@ -63,7 +63,7 @@ body {
         -webkit-animation-delay: $i*-0.9s;
         animation-delay: $i*-0.9s;
 
-        background-color: #00FF00;
+        background-color: #009688;
       }
     }
   }

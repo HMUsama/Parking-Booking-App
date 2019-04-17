@@ -10,26 +10,23 @@ class UsersSignedInLinks extends Component {
     constructor() {
       super();
       this.state = {
-        Admin:'',
-        User:'',
+
       }
     }
    async componentWillMount(){
     const value=await localStorage.getItem("ADMIN")
     const value1=await localStorage.getItem("USER")
-        console.log("componentWillMount Admin",value)
-        console.log('componentWillMount User',value1)
         this.setState({
             Admin:value,
             Users:value1,
-        })
-     
+        })  
       }
     user(){
         return(
             <ul className="right">
             <li><NavLink to='/parking'>Book Parking </NavLink></li>
             <li><NavLink to='/selectArea'>Details </NavLink></li>
+            <li><NavLink to='/feedback'>Feedback </NavLink></li>
             {/* <li><NavLink to='/selectArea'>User... </NavLink></li> */}
             <li><NavLink to='/'><a onClick={this.Logout.bind(this)}>LogOut</a></NavLink></li>
             </ul>
@@ -39,7 +36,9 @@ class UsersSignedInLinks extends Component {
         return(
             <ul className="right">
                 {/* <li><NavLink to='/parking'>User details </NavLink></li> */}
-                <li><NavLink to='/selectArea'>Admin </NavLink></li>
+                <li><NavLink to='/'>Details </NavLink></li>
+                <li><NavLink to='/'>Book Area </NavLink></li>
+                <li><NavLink to='/'>Admin </NavLink></li>
                 <li><NavLink to='/'><a onClick={this.Logout.bind(this)}>LogOut</a></NavLink></li>
             </ul>
         )
@@ -49,19 +48,11 @@ class UsersSignedInLinks extends Component {
         this.props.signOutStd();
     }
     render() {
-        // const value= localStorage.getItem("statusAD")
-        // const value1= localStorage.getItem("statusUR")
-        console.log('USERS SIGN IN LINK',this.state.User)
-        // console.log('USERS SIGN IN LINK',this.state.User)
-        console.log('ADMIN SIGN IN LINK',this.state.Admin)
+        // console.log("createdAt>>>>>>>>>>>>>>>>>",this.props.create)
         return (
             <div>
             {
-              !this.state.User   ?   this.user():this.admin()
-            }
-            {
-            //   this.state.Admin == true ?   this.admin() :null
-            // this.state.Admin == 'Admin' ?   this.user() :  this.admin()
+              this.props.create !== '1555347462770'   ?   this.user():this.admin()
             }
           </div>
       );
@@ -86,11 +77,13 @@ const mapDispatchToProps =(dispatch)=>{
     }
 }
 const mapStateToProps=(state)=>{
-    console.log("=======================Nav  ;-)",state)
-    console.log("=======================Nav  ;-)",state.firebase.auth.email);
+    // console.log("=======================Nav  ;-)",state)
+    // console.log("=======================Nav  ;-)",state.firebase.auth.email);
     const status1 =state.firebase.auth.email;
+    const createdAt =state.firebase.auth.createdAt;
     return{
         status:status1,
+        create: createdAt,
         authUR:    state.firebase.auth,
         authAd:    state.firebase.auth,
     }

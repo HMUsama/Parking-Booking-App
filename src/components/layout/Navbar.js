@@ -22,8 +22,6 @@ class Navbar extends Component {
   }
  
     render() {
-    // console.log("navbar------------------ID--> :)",this.props.authUR.uid);
-    // console.log("===============Navigation",this.state.status1)
     const uid =this. props.auth.uid
     const link1= uid ? <UsersSignedInLinks/>:<UserSignedOutLinks/>
       return (
@@ -62,13 +60,9 @@ class Navbar extends Component {
 
 const mapStateToProps=(state)=>{
     // console.log("=======================Nav  ;-)",state)
-    // console.log("=======================Nav...",state.authUR.status);
-    // const status1 = state.authUR.status; 
     return{
         // _status:   status1,
         auth:    state.firebase.auth,
-        // authAd:    state.firebase.auth,
-        // profile: state.firebase.profile
     }
 }
 

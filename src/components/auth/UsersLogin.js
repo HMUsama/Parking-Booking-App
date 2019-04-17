@@ -4,7 +4,8 @@ import {signInUR} from '../../store/actions/authActionUR'
 import {adminLognin} from '../../store/actions/authActionAd'
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
-// import Loader from '../loader/Loader'
+import Loader from '../loader/Loader'
+import swal from 'sweetalert';
 
 
 class UsersLogIn extends Component {
@@ -12,7 +13,7 @@ class UsersLogIn extends Component {
         state = {
             email:'',
             password:'',
-            status:this.props._status,
+            status:false,
         }    
     // }
 
@@ -22,13 +23,16 @@ hundleChange=(e)=>{
     })
 }
 hundleSubmit=(e)=>{
+    if(!this.state.email){
+        swal(" Insert Email ");
+    }else if(!this.state.password) {
+        swal(" Insert Password ");
+    }
+    
     e.preventDefault();
     console.log("User Login",e)
-    if(this.state.email==='admin@g.com' && this.state.password === '123123'){
-        this.props.adminLognin(this.state);
-    }else{
-        this.props.signInUR(this.state);
-    }
+    this.props.signInUR(this.state);
+    this.setState({status:true})
 }
 
   render() {
@@ -62,8 +66,13 @@ hundleSubmit=(e)=>{
             <Link to='/userSignUp' className=" lighten-1 ">
             Create a new Account</Link>
                 <div className="red-text center">
-                    {authError ? <h5>
-                    {authError}
+                    {this.state.status ? 
+                    <h5><Loader/></h5>
+                     : null}
+                </div>
+                <div className="red-text center">
+                    {authError ? <h5> 
+                        {swal(" Login Faild ")}
                     </h5> : null}
                 </div>
             </div>

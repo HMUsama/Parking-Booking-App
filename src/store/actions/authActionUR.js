@@ -6,7 +6,7 @@ export const userSignUp = (newStudent) =>{
             newStudent.email,
             newStudent.password
         ).then((res)=>{
-        return firestore.collection("student").doc(res.user.uid).set({
+        return firestore.collection("Users").doc(res.user.uid).set({
                 email    : newStudent.email,
                 firstName: newStudent.firstName,
                 lastName:  newStudent.lastName,     
@@ -27,7 +27,7 @@ export const signInUR = (credentails) =>{
             credentails.email,
             credentails.password
         ).then(()=>{
-            dispatch({type:'Login_SuccessFull',payload:'User'});
+            dispatch({type:'Login_SuccessFull',payload:true});
         }).catch((err)=>{
             dispatch({type:'Login_Error',err});
         });

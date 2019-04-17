@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {userSignUp} from '../../store/actions/authActionUR'
 import { Redirect } from 'react-router-dom'
+import Loader from '../loader/Loader'
 
 class UserSignUp extends Component {
 
@@ -10,6 +11,7 @@ class UserSignUp extends Component {
             lastName:'',
             email:'',
             password:'',
+            status:false,
         }
 
 hundleChange=(e)=>{
@@ -20,6 +22,7 @@ hundleChange=(e)=>{
 hundleSubmit=(e)=>{
     e.preventDefault();
     this.props.userSignUp(this.state)
+    // this.setState({status:true})
 }
 
   render() {
@@ -55,6 +58,11 @@ hundleSubmit=(e)=>{
     <br/>
         <div className="input-field">
         <button className="btn pink lighten-1 z-depth-1">SignUp</button>
+                <div className="red-text center">
+                    {this.state.status ? 
+                    <h5><Loader/></h5>
+                     : null}
+                </div>
             <div className="red-text center">
                 {/* {authError ? <p>{authError}</p> : null} */}
             </div>
@@ -65,10 +73,12 @@ hundleSubmit=(e)=>{
   }
 }
 const mapStateToProps =(state)=> {
+    const status2 =state.authUR.status;
     return{
         authStd: state.firebase.auth,
         // authError: state.authStd.authErrorStd_signup,
         // student  : state.authStd.student
+        
     }
 }
 const mapDispatchToProps =(dispatch)=> {

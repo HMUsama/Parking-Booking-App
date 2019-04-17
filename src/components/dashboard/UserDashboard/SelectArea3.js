@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-// import DatePicker from 'react-date-picker';
-import DatePicker from 'react-datepicker';
 
 import swal from 'sweetalert';
 import moment from 'moment'
 import './SelectAreas.css'
 // import './SelectArea.scss'
+import { Redirect } from 'react-router-dom'
+import {connect} from 'react-redux'
 
 
 
@@ -13,61 +13,106 @@ class SelectArea3 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // date: new Date(),
       date: '',
-      startTime:new Date(),
+      startTime:'',
       endTime:'',
-      form:true,
+      fromSlot:true,
+      form:false,
     }
   }
-  // hundleChange=(e)=>{
-  //   this.setState({
-  //     [e.target.id]:e.target.value,
-  //   })
-  // }
+// Date
+  hundleDate=(id)=> {
+    const newDate = id.target.value;
+    const newdate = moment(newDate).format('L');
+    this.setState({date:newdate})
+}
+// Start Time
+  hundleStartTime=(id)=>{
+  const StartTime = id.target.value;
+  // console.log("StartTime-----",StartTime)
+  this.setState({startTime:StartTime})
+}
+// End Time
+  hundleEnd=(id)=>{
+    const EndTime = id.target.value;
+    // console.log("EndTime-----",EndTime)
+    this.setState({endTime:EndTime})
+}
 
-  selectSlot=()=>{
-    // console.log("date........>",year)
-    const {date,startTime,endTime } = this.state;
-    // if(!date){
-    //   swal("Insert Date");
-    // }
-    //  if(startTime){
-    //   alert('date ===='+startTime)
-    // }else{
-    //  console.log("date........>",date)
-    // }
-    // else if(!startTime){
-    //   alert("Insert Time ")
-    // }
-    // else if(!endTime){
-    //   alert("Insert End Time ")
-    // }
-    // else{
-    //   alert("Data save ")
-    // }
-    // this.setState({form:true})
+
+selectSlot=()=>{
+  const {date,startTime,endTime } = this.state;
+  console.log("DATE",date)
+  console.log("START TIME",startTime)
+  console.log("END TIME",endTime)
+  const currentDate = new Date();
+  // Date 
+  const Current_Date =moment(currentDate).format('L')
+
+  const n = currentDate.getTime(startTime)
+  const Current_TIME =moment(n).format('LT')
+  if(!date){
+    swal(" Insert Date");
   }
+  else if(!startTime){
+    swal(" Insert Start Time");
+  }
+  else if(!endTime){
+    swal(" Insert End Time");
+  }
+  else if(date == Current_Date){
+      if(startTime >=Current_TIME){
+        this.setState({form:true,fromSlot:false})
+      }else{
+        swal("Start TIME Should be Grater then Current TIME");
+      }
+  }
+  else if(date > Current_Date){
+    if(endTime>startTime){
+      this.setState({form:true,fromSlot:false})
+    }else{
+      swal("End  Time Should be  Grater then Start TIME ");
+    }
+  }
+  else if(date < Current_Date){
+    if(date < Current_Date){
+      swal(" Date  Should be Grater then Current TIME and Future");
+    }else{
+      this.setState({form:true,fromSlot:false})
+    }
+  }
+}
+
+
+submit(e){
+  console.log("SUBMIT",e.target.value)
+}
+
 
 FormSlot(){
     return(
       <center>
-      <h1 className="h1">Block 1</h1>
+      <h1 className="h1">Block 3</h1>
       <div className="block_Area">
           <label>Select Date:</label>
-          <input type="date" id="date" onChange={this.hundleChange}  className="date-picker" formTarget="MM/DD/YYYY"/>
+          <input type="date" id="date"      onChange={this.hundleDate.bind(this.id)} />
           <label>Start Time:</label>
-          <input type="time" id="startTime"onChange={this.hundleChangeST} className="DatePicker" />
+          <input type="time" id="startTime" onChange={this.hundleStartTime.bind(this.id)}/>
           <label>End Time:</label>
-          <input type="time" id="endTime"onChange={this.hundleChangeET} className="DatePicker" />
+          <input type="time" id="endTime"   onChange={this.hundleEnd.bind(this.id)}/>
       </div>
+
       <div>
         <button onClick={this.selectSlot.bind(this)} className="slot_btn">Select Slot</button>
       </div>
-    </center>
+     </center>
       )
 }
+cencel=()=>{
+  this.props.history.push('parking');
+}
 SelectSlot(){
+  if(this.props.auth == false ) return <Redirect to='/login'/>
   return(
     <div className="SelectSlot">
     <center>
@@ -75,31 +120,33 @@ SelectSlot(){
       <div>
         <table className="table1">
           <tr className="table1-row">
-            <button>slot 1</button>
-            <button>slot 2</button>
-            <button>slot 3</button>
+          <center>
+            <button className="row1" value="1" onClick={this.submit}>slot 1</button>
+            <button className="row1"value="2" onClick={this.submit}>slot 2</button>
+            <button className="row1"value="3" onClick={this.submit}>slot 3</button>
+          </center>
           </tr>
-          <tr className="table1-row">
-            <button>slot 4</button>
-            <button>slot 5</button>
-            <button>slot 6</button>
+          <tr className="row1">
+            <button className="row1"value="4" onClick={this.submit}>slot 4</button>
+            <button className="row1"value="5" onClick={this.submit}>slot 5</button>
+            <button className="row1"value="6" onClick={this.submit}>slot 6</button>
           </tr>
         </table>
       </div>
     </center>
+    <br/>
+    <div>
+      <button  className="slot_btn" onClick={this.cencel}>Cencle</button>
+    </div>
     </div>
   )
 }
   render() {
-    console.log("date====>---------------:)",this.state.date)
-    // console.log("====+++++++++++++++++",moment(Date.now()).format('LLLL'))
-    console.log("startTime====>",this.state.startTime)
-    console.log("endTime====>",this.state.endTime)
     return (
       <div className="Parking">
       <div className="select_Area">
       {
-        this.FormSlot()
+      this.state.fromSlot ===true ?  this.FormSlot() :null
       }
       {
         this.state.form ===true ?this.SelectSlot()  :null
@@ -111,4 +158,11 @@ SelectSlot(){
   }
 }
 
-export default SelectArea3;
+
+const mapStateToProps = (state) => {
+  return{
+      auth:   state.firebase.auth.uid,
+  }
+}
+export default connect(mapStateToProps)(SelectArea3);
+// export default SelectArea3;
