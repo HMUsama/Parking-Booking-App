@@ -14,6 +14,7 @@ import UserSignUp from './components/auth/UsersSignUp'
 import DashboardUR from './components/dashboard/UserDashboard/DashboardUR'
 import Parking from './components/dashboard/UserDashboard/Parking'
 import Feedback from './components/dashboard/UserDashboard/Feedback'
+import Details from './components/dashboard/UserDashboard/Details'
 import SelectArea1 from './components/dashboard/UserDashboard/SelectArea1'
 import SelectArea2 from './components/dashboard/UserDashboard/SelectArea2'
 import SelectArea3 from './components/dashboard/UserDashboard/SelectArea3'
@@ -46,6 +47,7 @@ class App extends Component {
         <Route exact path="/home"          component={DashboardUR}/>
         <Route exact path="/parking"       component={Parking}/>
         <Route exact path="/feedback"      component={Feedback}/>
+        <Route exact path="/details"      component={Details}/>
         <Route exact path="/block_Area1"   component={SelectArea1}/>
         <Route exact path="/block_Area2"   component={SelectArea2}/>
         <Route exact path="/block_Area3"   component={SelectArea3}/>

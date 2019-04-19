@@ -23,6 +23,7 @@ class SelectArea1 extends Component {
       result:'',
     }
   }
+
 // Date
   hundleDate=(id)=> {
     const newDate = id.target.value;
@@ -45,9 +46,6 @@ class SelectArea1 extends Component {
 
 selectSlot=()=>{
   const {date,startTime,endTime } = this.state;
-  console.log("DATE",date)
-  console.log("START TIME",startTime)
-  console.log("END TIME",endTime)
   const currentDate = new Date();
   // Date 
   const Current_Date =moment(currentDate).format('L')
@@ -91,43 +89,52 @@ selectSlot=()=>{
 }
 // upload(){
 upload=async() =>{
-  // this.props.fatchAndCreate(this.state);
   const {date,startTime,endTime,result} = this.state;
   const db = firebase.firestore();
   try {
     // debugger;  
     const allBooking = await firebase.firestore().collection('block1').where('date','==',this.state.date).get();
     const data = allBooking.docs.map( a => a.data());
-    console.log("parking---------------------------------parking->",data);
-
 
     if(data.length < 1 ){
-      console.log("DATA NULL---------------------------------->");
-      db.collection('block1').doc(this.props.ID).set({
-        ID:this.props.ID,
-        date:date,
-        slot1:false,
-        slot2:false,
-        slot3:false,
-        slot4:false,
-        slot5:false,
-        slot6:false,
-      }).then(res=>{
-        console.log("RESPONCE-----------------RESPONCE",res.data())
-        // this.setState({ result: data });
-      })
-    }else{
-      console.log("ELSE-----------------ELSE-->")
-  }
+        db.collection("block1").doc().set({ date:date })
+    }else{console.log("ELSE-----------------ELSE-->")}
     this.setState({ result: data,form:true,fromSlot:false });
   } catch (err) {
     console.error(err);
   }
 }
-
-submit=(e)=>{
-  this.props.bookSlot(this.state,e.target.value)
-  console.log("SUBMIT",e.target.value)
+// submit=(e)=>{
+submit=async(e) =>{
+  const {date,startTime,endTime} = this.state;
+  const {ID} = this.props;
+  const slotID = e.target.value;
+  const db = firebase.firestore();
+  try {
+    const allBooking = await firebase.firestore().collection('block1').where('date','==',this.state.date).get();
+    const data = allBooking.docs.map( a => a.data());
+    console.log("data---------------------------------data->",data);
+    for(var i=0; i<data.length; i++) {
+      // debugger
+       if(data[i].slotID == slotID && data[i].EndTime < startTime){
+            db.collection("block1").doc().set({
+              // Ticket:ref.id,
+              ID,
+              StartTime:startTime,
+              EndTime:endTime,
+              date:date,
+              slotID
+          })
+          swal("YOUR  BOOKING SUBMIT :)");
+          this.props.history.push('parking'); 
+        }
+          else{
+          swal("THIS SLOT IS ALREADY BOOK:)");
+          }
+    }
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 
@@ -164,15 +171,15 @@ SelectSlot(){
         <table className="table1">
           <tr className="table1-row">
           <center>  
-            <button className="row1" value="1" onClick={this.submit}>slot 1</button>
-            <button className="row1"value="2" onClick={this.submit}>slot 2</button>
-            <button className="row1"value="3" onClick={this.submit}>slot 3</button>
+            <button className="row1" value="slot1" onClick={this.submit}>slot 1</button>
+            <button className="row1"value="slot2" onClick={this.submit}>slot 2</button>
+            <button className="row1"value="slot3" onClick={this.submit}>slot 3</button>
           </center>
           </tr>
           <tr className="row1">
-            <button className="row1"value="4" onClick={this.submit}>slot 4</button>
-            <button className="row1"value="5" onClick={this.submit}>slot 5</button>
-            <button className="row1"value="6" onClick={this.submit}>slot 6</button>
+            <button className="row1"value="slot4" onClick={this.submit}>slot 4</button>
+            <button className="row1"value="slot5" onClick={this.submit}>slot 5</button>
+            <button className="row1"value="slot6" onClick={this.submit}>slot 6</button>
           </tr>
         </table>
       </div>
@@ -185,7 +192,6 @@ SelectSlot(){
   )
 }
   render() {
-    // console.log("Data RENDER",this.state.result)
     return (
       <div className="Parking">
       <div className="select_Area">
@@ -193,6 +199,7 @@ SelectSlot(){
         this.state.fromSlot ===true ?  this.FormSlot() :null
       }
       {
+        // this.state.form ===false ?this.SelectSlot()  :null
         this.state.form ===true ?this.SelectSlot()  :null
       }
          
@@ -203,6 +210,7 @@ SelectSlot(){
 }
 
 const mapStateToProps =(state)=> {
+  console.log("STATE-----..>>>>>>>>>>>>>>>>>>>>>>",state)
   console.log("STATE-----",state.firebase.auth.uid)
   return{
     ID:state.firebase.auth.uid

@@ -1,0 +1,45 @@
+.card{
+    border-radius: 8px;
+    border-color: #0000;
+    border: 5px;
+}
+.main-div:hover{
+    box-shadow: 10px 18px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease 0s;
+}
+.card-content{
+    margin-left: -60%;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    background-color: rgb(210, 219, 215);
+}
+.card-title{
+    margin-left: 1%;
+}
+.black-text{
+    margin-left: -10%;
+}
+
+.slot_btn {
+    margin-top: 10px;
+    width: 30px;
+    height: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    }
+  
+  .slot_btn:hover {
+    background-color: #009688;
+    box-shadow: 0px 15px 20px rgba(47, 87, 35, 0.73);
+    color: #fff;
+    transform: translateY(-7px);
+  }
