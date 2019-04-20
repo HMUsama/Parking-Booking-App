@@ -32,27 +32,47 @@ class SelectArea2 extends Component {
 }
 // Start Time
   hundleStartTime=(id)=>{
-  const StartTime = id.target.value;
+    const StartTime =  id.target.value;
+    var ts = StartTime;
+    var H = +ts.substr(0, 2);
+    var h = (H % 12) || 12;
+    // h = (h < 10)?("0"+h):h;  // leading 0 at the left for 1 digit hours
+    h = (h < 10)?(h):h;  // leading 0 at the left for 1 digit hours
+    var ampm = H < 12 ? " AM" : " PM";
+    ts = h + ts.substr(2, 3) + ampm;
+
+  console.log("StartTime-----",ts)
+
   // console.log("StartTime-----",StartTime)
-  this.setState({startTime:StartTime})
+  this.setState({startTime:ts})
 }
 // End Time
   hundleEnd=(id)=>{
     const EndTime = id.target.value;
-    // console.log("EndTime-----",EndTime)
-    this.setState({endTime:EndTime})
+    var ts = EndTime;
+    var H = +ts.substr(0, 2);
+    var h = (H % 12) || 12;
+    // h = (h < 10)?("0"+h):h;  // leading 0 at the left for 1 digit hours
+    h = (h < 10)?(h):h;  // leading 0 at the left for 1 digit hours
+    var ampm = H < 12 ? " AM" : " PM";
+    ts = h + ts.substr(2, 3) + ampm;
+    console.log("EndTime-----",ts)
+    this.setState({endTime:ts})
 }
 
 
 selectSlot=()=>{
   const {date,startTime,endTime } = this.state;
+  console.log("DATE",date)
+  console.log("START TIME",startTime)
+  console.log("END TIME",endTime)
   const currentDate = new Date();
   // Date 
   const Current_Date =moment(currentDate).format('L')
-
   const n = currentDate.getTime(startTime)
-  const Current_TIME =moment(n).format('LT')
-  console.log("Current_TIME ",Current_TIME)
+  //current time
+  const current_TIME =moment(n).format('LT')
+  console.log("current_TIME ",current_TIME)
   if(!date){
     swal(" Insert Date");
   }
@@ -63,16 +83,19 @@ selectSlot=()=>{
     swal(" Insert End Time");
   }
   else if(date == Current_Date){
-      if(Current_TIME >=startTime){
-        // this.setState({form:true,fromSlot:false})
-        this.upload();
+    // debugger
+      if(startTime>=current_TIME){
+         if(startTime<endTime){
+           this.upload();
+        }else{
+          swal("End TIME Should be Grater then Start TIME");
+        }
       }else{
         swal("Start TIME Should be Grater then Current TIME");
       }
   }
   else if(date > Current_Date){
     if(endTime>startTime){
-      // this.setState({form:true,fromSlot:false})
       this.upload();
     }else{
       swal("End  Time Should be  Grater then Start TIME ");
@@ -82,7 +105,6 @@ selectSlot=()=>{
     if(date < Current_Date){
       swal(" Date  Should be Grater then Current Date and Future");
     }else{
-      // this.setState({form:true,fromSlot:false})
       this.upload();
     }
   }
@@ -97,7 +119,7 @@ upload=async() =>{
     const data = allBooking.docs.map( a => a.data());
 
     if(data.length < 1 ){
-        db.collection("block2").doc().set({ date:date })
+        db.collection("block2").doc().set({ date:date})
     }else{console.log("ELSE-----------------ELSE-->")}
     this.setState({ result: data,form:true,fromSlot:false });
   } catch (err) {
@@ -115,24 +137,48 @@ submit=async(e) =>{
     const data = allBooking.docs.map( a => a.data());
     console.log("data---------------------------------data->",data);
     for(var i=0; i<data.length; i++) {
-      // debugger
-       if(data[i].slotID == slotID && data[i].EndTime < startTime){
-            db.collection("block2").doc().set({
-              // Ticket:ref.id,
-              ID,
-              StartTime:startTime,
-              EndTime:endTime,
-              date:date,
-              slotID
-          })
-          swal("YOUR  BOOKING SUBMIT :)");
-          this.props.history.push('parking'); 
+        if(data[i].slotID==slotID){
+              if(data[i].EndTime<startTime){
+                const ref=  db .collection("block2").doc()
+                db .collection("block2").doc().set({
+                                        No:'1',
+                                        ID,
+                                        ParkingID:ref.id,
+                                        StartTime:startTime,
+                                        EndTime:endTime,
+                                        date:date,
+                                        slotID
+                                        })
+                console.log("YOUR  BOOKING SUBMIT MATCH")
+                swal("YOUR  BOOKING SUBMIT :)");
+                this.props.history.push('parking'); 
+                break;
+              }
+              else{
+                swal("ALREADY  BOOKING This Date :)");
+                // this.props.history.push('parking'); 
+              }
+              break;
         }
-          else{
-          swal("THIS SLOT IS ALREADY BOOK:)");
-          }
+        else if (data[i].slotID !==slotID){{
+          const ref=  db .collection("block2").doc()
+          db .collection("block2").doc().set({
+                                      ID,
+                                      ParkingID:ref.id,
+                                      StartTime:startTime,
+                                      EndTime:endTime,
+                                      date:date,
+                                      slotID
+                                      })
+              console.log("YOUR  BOOKING SUBMIT NON MATCH")
+            swal("YOUR  BOOKING SUBMIT :)");
+            this.props.history.push('parking'); 
+            break;
+        }
+      }
     }
-  } catch (err) {
+  } 
+  catch (err) {
     console.error(err);
   }
 }
@@ -141,12 +187,14 @@ submit=async(e) =>{
 FormSlot(){
     return(
       <center>
-      <h1 className="h1">Block 1</h1>
+      <h1 className="h1">Block 2</h1>
       <div className="block_Area">
           <label>Select Date:</label>
           <input type="date" id="date"      onChange={this.hundleDate.bind(this.id)} />
           <label>Start Time:</label>
-          <input type="time" id="startTime" onChange={this.hundleStartTime.bind(this.id)}/>
+          <input type="time" id="startTime" name="time"  onChange={this.hundleStartTime.bind(this.id)}/>
+          {/* <input type="time"pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" id="startTime" name="time"  onChange={this.hundleStartTime.bind(this.id)}/> */}
+
           <label>End Time:</label>
           <input type="time" id="endTime"   onChange={this.hundleEnd.bind(this.id)}/>
       </div>
@@ -192,6 +240,7 @@ SelectSlot(){
   )
 }
   render() {
+    // console.log("Data RENDER",this.state.result)
     return (
       <div className="Parking">
       <div className="select_Area">

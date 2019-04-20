@@ -18,7 +18,10 @@
 .black-text{
     margin-left: -10%;
 }
-
+.black-text-slot{
+    margin-left: -10%;
+    font-weight: bold;
+}
 .slot_btn {
     margin-top: 10px;
     width: 30px;

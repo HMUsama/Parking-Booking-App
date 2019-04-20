@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import './Parking.css'
 import { NavLink } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import {connect} from 'react-redux'
 
 
 class Parking extends Component {
 
   render() {
+    if(!this.props.auth ) return <Redirect to='/login'/>
     return (
       <div className="Parking">
         <div className="select_Area">
@@ -23,4 +26,11 @@ class Parking extends Component {
   }
 }
 
-export default Parking;
+
+const mapStateToProps = (state) => {
+  return{
+      auth:   state.firebase.auth.uid,
+  }
+}
+export default connect(mapStateToProps)(Parking);
+// export default Parking;
