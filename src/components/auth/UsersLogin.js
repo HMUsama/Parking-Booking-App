@@ -14,6 +14,7 @@ class UsersLogIn extends Component {
             email:'',
             password:'',
             status:false,
+            auth:false,
         }    
     // }
 
@@ -28,11 +29,11 @@ hundleSubmit=(e)=>{
     }else if(!this.state.password) {
         swal(" Insert Password ");
     }
+    this.setState({status:true,auth:true})
     
     e.preventDefault();
     console.log("User Login",e)
     this.props.signInUR(this.state);
-    this.setState({status:true})
 }
 
   render() {
@@ -66,14 +67,18 @@ hundleSubmit=(e)=>{
             <Link to='/userSignUp' className=" lighten-1 ">
             Create a new Account</Link>
                 <div className="red-text center">
-                    {this.state.status ? 
-                    <h5><Loader/></h5>
-                     : null}
+                    {/* {auth == true  ?
+                    <h5><Loader/></h5>:null
+                      } */}
                 </div>
                 <div className="red-text center">
-                    {authError ? <h5> 
-                        {swal(" Login Faild ")}
-                    </h5> : null}
+                    {authError ? 
+                        (setTimeout(() => {
+                            swal(" Login Faild")
+                        }, 500))
+                                
+                                : null
+                    }
                 </div>
             </div>
             </form>
@@ -85,13 +90,14 @@ hundleSubmit=(e)=>{
 
 const mapStateToProps = (state) => {
     console.log("User Login______________________>>>>>",state)
-    // console.log("User Login__________STATUS____________>>>>>",state.authUR.status)
+    console.log("User Login__________STATUS____________>>>>>",state.authUR.authErrorStd_login)
     const status1 =state.authAd.status;
     const status2 =state.authUR.status;
     return{
         auth:   state.firebase.auth.uid,
         statusAD:status1,
         statusUR:status2,
+        authError:state.authUR.authErrorStd_login,
     }
 }
 const mapDispatchToProps=(dispatch)=>{

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import React from 'react'
 import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {signOutStd} from '../../../store/actions/authActionUR' 
-
+import './UserSignInLink.css'
+import swal from 'sweetalert';
 
 
 class UsersSignedInLinks extends Component {
@@ -14,14 +14,18 @@ class UsersSignedInLinks extends Component {
     }
     Logout(){
         localStorage.clear();
+        swal("Log Out...")
         this.props.signOutStd();
     }
+
     user(){
         return(
             <ul className="right">
-            <li><NavLink to='/parking'>Book Parking </NavLink></li>
+            <li><NavLink to='/home'>Home </NavLink></li>
+            <li><NavLink to='/parking'>Booking </NavLink></li>
             <li userID={this.props.User_id}><NavLink to='/details'>Details </NavLink></li>
-            <li><NavLink to='/feedback'>Feedback </NavLink></li>
+            <li><NavLink to='/feedback'>Feedbacks </NavLink></li>
+            {/* <li userID={this.props.User_id}><NavLink to='/viewFB'>View FB </NavLink></li> */}
             {/* <li><NavLink to='/selectArea'>User... </NavLink></li> */}
             <li><NavLink to='/'><a onClick={this.Logout.bind(this)}>LogOut</a></NavLink></li>
             </ul>
@@ -30,16 +34,15 @@ class UsersSignedInLinks extends Component {
     admin(){
         return(
             <ul className="right">
-                {/* <li><NavLink to='/parking'>User details </NavLink></li> */}
-                <li><NavLink to='/'> Users </NavLink></li>
-                <li><NavLink to='/'>Booking </NavLink></li>
-                <li><NavLink to='/'>Feedback </NavLink></li>
+                <li><NavLink to='/allUsers'> Users </NavLink></li>
+                <li><NavLink to='/allBooking'>Booking </NavLink></li>
+                <li><NavLink to='/allFeedback'>Feedback View</NavLink></li>
                 <li><NavLink to='/'><a onClick={this.Logout.bind(this)}>LogOut</a></NavLink></li>
             </ul>
         )
     }
+
     render() {
-        // console.log("createdAt>>>>>>>>>>>>>>>>>",this.props.create)
         return (
             <div>
             {
@@ -50,17 +53,6 @@ class UsersSignedInLinks extends Component {
     }
   }
 
-// const UsersSignedInLinks = (props) => {
-//     // console.log("StdSignedInLinks",props)
-//     return(
-//      <ul className="right">
-//         <li><NavLink to='/parking'>Book Parking </NavLink></li>
-//         <li><NavLink to='/selectArea'>Details </NavLink></li>
-//         <li><NavLink to='/'><a onClick={props.signOutStd}>LogOut</a></NavLink></li>
-//      </ul>
-//     )
-// }
-
 
 const mapDispatchToProps =(dispatch)=>{
     return {
@@ -69,8 +61,6 @@ const mapDispatchToProps =(dispatch)=>{
 }
 const mapStateToProps=(state)=>{
     console.log("User Login______________________>>>>>",state.firebase.auth.uid)
-    // console.log("=======================Nav  ;-)",state)
-    // console.log("=======================Nav  ;-)",state.firebase.auth.email);
     const status1 =state.firebase.auth.email;
     const createdAt =state.firebase.auth.createdAt;
     return{

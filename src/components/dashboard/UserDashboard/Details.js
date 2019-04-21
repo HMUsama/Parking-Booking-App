@@ -17,30 +17,24 @@ class Details extends Component {
     };
   }
   render() {
+    if(!this.props.auth ) return <Redirect to='/login'/>
     return (
       <div>
         {
           this.props.ID ? (<DetailsList1 userID={this.props.ID}/>) 
           :
           (<Loader/>)
-        }
-   
-    
-     </div>
+        }   
+      </div>
     );
   }
 }
 
 
 const mapStateToProps = (state) => {
-  console.log("User Login______________________>>>>>",state.firebase.auth.uid)
-  // console.log("User Login__________STATUS____________>>>>>",state.authUR.status)
-  const status1 =state.authAd.status;
-  const status2 =state.authUR.status;
   return{
-      ID:   state.firebase.auth.uid,
-      statusAD:status1,
-      statusUR:status2,
+    ID:   state.firebase.auth.uid,
+    auth:   state.firebase.auth.uid,
   }
 }
 export default connect(mapStateToProps)(Details);

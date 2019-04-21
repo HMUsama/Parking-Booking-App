@@ -140,7 +140,7 @@ submit=async(e) =>{
         if(data[i].slotID==slotID){
               if(data[i].EndTime<startTime){
                 const ref=  db .collection("block1").doc()
-                db .collection("block1").doc().set({
+                db .collection("block1").doc(ref.id).set({
                                         No:'1',
                                         ID,
                                         ParkingID:ref.id,
@@ -162,7 +162,7 @@ submit=async(e) =>{
         }
         else if (data[i].slotID !==slotID){{
           const ref=  db .collection("block1").doc()
-          db .collection("block1").doc().set({
+          db .collection("block1").doc(ref.id).set({
                                       ID,
                                       ParkingID:ref.id,
                                       StartTime:startTime,

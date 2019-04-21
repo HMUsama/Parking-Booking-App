@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import './Dashboard.css';
 import { Redirect } from 'react-router-dom'
 import {connect} from 'react-redux'
-
+import './Dashboard.css'
 
 class DashboardUR extends Component {
   constructor(props) {
@@ -11,7 +11,9 @@ class DashboardUR extends Component {
 
     };
   }
-
+goto=()=>{
+  this.props.history.push('parking')
+}
   render() {
     if(!this.props.auth ) return <Redirect to='/login'/>
     return (
@@ -19,7 +21,7 @@ class DashboardUR extends Component {
         <center>
       <img src="https://www.mudelautod.ee/wp-content/uploads/loader.gif"   className="image-car"/>
         </center>
-        {/* <h1>User Dashboard</h1> */}
+        <button className="slot_btn_1"onClick={this.goto}>Park Your Car </button>
       </div>
     );
   }

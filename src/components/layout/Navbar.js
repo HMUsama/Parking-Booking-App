@@ -61,7 +61,6 @@ class Navbar extends Component {
 const mapStateToProps=(state)=>{
     // console.log("=======================Nav  ;-)",state)
     return{
-        // _status:   status1,
         auth:    state.firebase.auth,
     }
 }
